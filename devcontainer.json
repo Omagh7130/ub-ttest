@@ -2,7 +2,7 @@
   "name": "Linux Desktop",
   "image": "ubuntu:20.04",
   "features": {},
-  "postCreateCommand": "export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y xfce4 xfce4-goodies novnc websockify x11vnc netsurf-gtk wget && wget -O /tmp/rustdesk.deb https://github.com/rustdesk/rustdesk/releases/download/1.2.3/rustdesk-1.2.3-x86_64.deb && dpkg -i /tmp/rustdesk.deb || apt-get -f install -y && rm /tmp/rustdesk.deb && mkdir -p /workspace/.vnc && x11vnc -storepasswd 1234 /workspace/.vnc/passwd && (Xvfb :1 -screen 0 1024x768x16 & xfce4-session &) && (x11vnc -display :1 -rfbauth /workspace/.vnc/passwd -forever -nopw -shared -rfbport 5900 &) && (websockify --web=/usr/share/novnc/ 6080 localhost:5900 &) && echo '✅ Desktop ready: open http://localhost:6080 in your browser, VNC password = 1234'",
+  "postCreateCommand": "./start-desktop.sh",
   "forwardPorts": [6080],
   "customizations": {
     "vscode": {
