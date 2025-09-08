@@ -1,20 +1,30 @@
 #!/bin/bash
-# Kill any old Xvfb/x11vnc
-pkill Xvfb
-pkill x11vnc
+set -e
 
-# Start Xvfb at 1280x820
-Xvfb :99 -screen 0 1280x820x16 &
+# Kill any old sessions
+killall Xvfb xfce4-session x11vnc websockify 2>/dev/null || true
+
+# Start a new virtual display
+Xvfb :99 -screen 0 1280x800x16 &
 export DISPLAY=:99
-
-# Start dbus
-dbus-launch &
+sleep 2
 
 # Start XFCE desktop
-xfce4-session &
+dbus-launch --exit-with-session xfce4-session &
 
-# Start VNC server
+# Start VNC server on port 5900
 x11vnc -display :99 -forever -nopw -rfbport 5900 &
 
-# Start RustDesk (adjust version/path if needed)
-rustdesk &
+# Start noVNC on port 6080
+websockify --web=/usr/share/novnc/ 6080 localhost:5900 &
+
+# --- Apps auto-start ---
+# Start NetSurf browser
+netsurf-gtk https://duckduckgo.com &
+
+# Start RustDesk (if installed)
+if command -v rustdesk >/dev/null 2>&1; then
+    rustdesk &
+fi
+
+wait -n
