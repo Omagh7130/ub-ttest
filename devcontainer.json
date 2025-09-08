@@ -1,0 +1,14 @@
+{
+  "name": "Linux Desktop",
+  "image": "ubuntu:20.04",
+  "features": {},
+  "postCreateCommand": "apt-get update && apt-get install -y xfce4 xfce4-goodies novnc websockify x11vnc",
+  "forwardPorts": [6080],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}
