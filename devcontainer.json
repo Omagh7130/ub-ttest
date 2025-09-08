@@ -2,7 +2,7 @@
   "name": "Linux Desktop",
   "image": "ubuntu:20.04",
   "features": {},
-  "postCreateCommand": "export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y xfce4 xfce4-goodies novnc websockify x11vnc xvfb dbus-x11 netsurf-gtk wget && wget -O /tmp/rustdesk.deb https://github.com/rustdesk/rustdesk/releases/download/1.4.1/rustdesk-1.4.1-x86_64.deb && dpkg -i /tmp/rustdesk.deb || apt-get -f install -y && rm /tmp/rustdesk.deb && chmod +x ./start-desktop.sh && ./start-desktop.sh",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
   "forwardPorts": [6080],
   "customizations": {
     "vscode": {
