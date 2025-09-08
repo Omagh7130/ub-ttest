@@ -1,21 +1,21 @@
 #!/bin/bash
 set -e
-
-# Prevent interactive prompts (keyboard, locale, etc.)
 export DEBIAN_FRONTEND=noninteractive
 
-# Update & install dependencies
-apt-get update
-apt-get install -y --no-install-recommends \
-  xfce4 xfce4-goodies novnc websockify x11vnc xvfb dbus-x11 netsurf-gtk wget locales tzdata
+echo "[1/5] Updating package list..."
+apt-get update -y
 
-# Install RustDesk
+echo "[2/5] Installing XFCE + tools..."
+apt-get install -y xfce4 xfce4-goodies novnc websockify x11vnc xvfb dbus-x11 netsurf-gtk wget
+
+echo "[3/5] Downloading RustDesk 1.4.1..."
 wget -O /tmp/rustdesk.deb https://github.com/rustdesk/rustdesk/releases/download/1.4.1/rustdesk-1.4.1-x86_64.deb
+
+echo "[4/5] Installing RustDesk..."
 dpkg -i /tmp/rustdesk.deb || apt-get -f install -y
 rm /tmp/rustdesk.deb
 
-# Make your desktop script executable
-chmod +x /workspaces/ub-ttest/start-desktop.sh
+echo "[5/5] Making start-desktop.sh executable..."
+chmod +x ./start-desktop.sh
 
-# Launch desktop
-/workspaces/ub-ttest/start-desktop.sh
+echo "✅ Setup complete. Run ./start-desktop.sh to start your Linux desktop!"
