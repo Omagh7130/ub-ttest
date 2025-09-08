@@ -2,7 +2,7 @@
   "name": "Linux Desktop",
   "image": "ubuntu:20.04",
   "features": {},
-  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
   "forwardPorts": [6080],
   "customizations": {
     "vscode": {
